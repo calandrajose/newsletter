@@ -1,0 +1,17 @@
+.Heading{
+    font-family: 'Ralewy', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.Search{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.btn-block{
+    width: 100%;
+}

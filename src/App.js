@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { Fragment, useState, useEffect } from "react";
+import axios from 'axios'
+import Header from './components/Header'
+import Form from './components/Form/Form'
+import News from './components/News'
 
 function App() {
+
+  const [category, setCategory] = useState('');
+  const [country, setCountry] = useState('');
+  const [news, setNews] = useState('');
+
+  useEffect(() => {
+    const fetchAPI = async () => {
+      const result = await axios.get(`https://newsapi.org/v2/top-headlines?country=${!country?'ar':country}&category=${!category?'general':category}`, {
+        headers: {
+          'X-Api-Key': process.env.REACT_APP_API_KEY
+        }
+      });
+      setNews(result);
+    }
+    fetchAPI()
+  }, [category, country])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <Header title='Buscador de Noticias' />
+      <div className='container white'>
+        <Form
+          setCategory={setCategory} 
+          setCountry={setCountry} 
+        />
+        {news ? <News
+          news={news}/> : null}
+      </div>
+    </Fragment>
   );
 }
 
